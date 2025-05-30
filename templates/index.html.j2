@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Moving Cow</title>
+</head>
+<body>
+  <div id="cow" style="position:absolute; white-space: pre; font-family: monospace; font-size: 16px;">
+&lt We are on farm #{{ next_port - 1 }}&gt
+ _____
+&lt; <a href="http://localhost:{{ next_port }}">http://localhost:{{ next_port }}</a> &gt;
+ -----
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+  </div>
+
+  <script>
+  function moveCow() {
+    const cow = document.getElementById('cow');
+    const maxX = window.innerWidth - cow.offsetWidth;
+    const maxY = window.innerHeight - cow.offsetHeight;
+    const randomX = Math.floor(Math.random() * maxX);
+    const randomY = Math.floor(Math.random() * maxY);
+    cow.style.left = randomX + 'px';
+    cow.style.top = randomY + 'px';
+  }
+  window.onload = moveCow;
+  </script>
+</body>
+</html>

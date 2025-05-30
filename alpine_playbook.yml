@@ -1,0 +1,27 @@
+---
+- name: Install nginx and configure ASCII art page
+  hosts: alpine_containers
+  gather_facts: false
+  vars:
+    nginx_dir: /var/www/localhost/htdocs
+  tasks:
+    - name: Update apk and install nginx and python3
+      raw: apk update && apk add --no-cache nginx python3
+
+    - name: Create nginx html directory
+      raw: mkdir -p {{ nginx_dir }}
+
+    - name: Copy custom nginx.conf
+      template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+
+    - name: Deploy ASCII art index.html
+      template:
+        src: templates/index.html.j2
+        dest: "{{ nginx_dir }}/index.html"
+
+    - name: Start nginx (stop if running)
+      raw: |
+        if pgrep nginx; then nginx -s stop; fi
+        nginx
